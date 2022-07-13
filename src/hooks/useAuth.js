@@ -1,23 +1,14 @@
-import React, { useState, useContext, createContext, useCallback } from "react";
+import React, { useState, useContext, createContext, useCallback, useEffect } from "react";
 import Cookie from "js-cookie";
 import axios from "axios";
 import endPoints from "@services/api";
 
 const AuthContext = createContext();
 
-export const ProviderAuth = ({ children }) => {
-  const auth = useProviderAuth();
-  return <AuthContext.Provider value={auth}> {children} </AuthContext.Provider>;
-};
-
-export const useAuth = () => {
-  return useContext(AuthContext);
-};
-
 function useProviderAuth() {
   const [user, setUser] = useState(null);
 
-  //Código copiado de un aporte
+  //Código copiado de un aporte, para que tome el token desde las cookies y no tener que hacer login
   const fetchUser = useCallback(async () => {
     try {
       const token = Cookie.get("token");
@@ -30,6 +21,7 @@ function useProviderAuth() {
       }
     } catch (error) {
       setUser(null);
+      throw error;
     }
   }, []);
 
@@ -59,15 +51,27 @@ function useProviderAuth() {
 
         // //y agrego user al context
         // setUser(user);
-        await fetchUser();
       }
     } catch (error) {
       if (error.code === "ERR_BAD_REQUEST") {
         setUser(null);
-        throw error;
       }
     }
+    await fetchUser();
   };
+  //Para que quede viendo que este logueado cada vez que se carga la página
+  useEffect(() => {
+    return fetchUser;
+  }, [fetchUser]);
 
   return { user, signIn };
 }
+
+export const ProviderAuth = ({ children }) => {
+  const auth = useProviderAuth();
+  return <AuthContext.Provider value={auth}> {children} </AuthContext.Provider>;
+};
+
+export const useAuth = () => {
+  return useContext(AuthContext);
+};
