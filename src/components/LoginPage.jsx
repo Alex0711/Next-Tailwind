@@ -29,7 +29,7 @@ export default function LoginPage() {
           setErrorLogin("Invalid email or password");
         } else {
           console.log(error);
-          setErrorLogin("Problemas en el servidor, intente nuevamente más tarde");
+          setErrorLogin(error.message);
         }
       })
       .finally(() => {
