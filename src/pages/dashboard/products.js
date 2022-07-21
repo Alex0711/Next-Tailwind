@@ -104,7 +104,8 @@ export default function Products() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
-                            <img className="h-10 w-10 rounded-full" src={product.images[0]} alt="" />
+                            {/* Debería agregar una validación para poder cambiar la etiqueta img */}
+                            <img className="h-10 w-10 rounded-full" src={product?.images[0]} alt="" width={40} height={40} />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.title}</div>
@@ -120,11 +121,11 @@ export default function Products() {
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{product.id}</td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <Link href={`/dashboard/edit/${product.id}`}>
-                          <a className="text-indigo-600 hover:text-indigo-900">Edit</a>
+                          <p className="text-indigo-600 hover:text-indigo-900 cursor-pointer">Edit</p>
                         </Link>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button className="text-indigo-600 hover:text-indigo-900" onClick={() => handleDelete(product.id)}>
+                        <button className="text-indigo-600 hover:text-red-500" onClick={() => handleDelete(product.id)}>
                           Delete
                         </button>
                       </td>

@@ -1,76 +1,79 @@
 import { useRef } from "react";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
 import { createProductSchema } from "schemas/productSchema";
 import { joiResolver } from "@hookform/resolvers/joi";
 import { addProduct, editProduct } from "@services/api/products";
+import Alert from "@common/Alert";
 
 export default function FormProduct({ product, setOpen, setAlert }) {
-  if (product?.category?.id || setOpen) {
-    const formRef = useRef(null);
+  const formRef = useRef(null);
+  const router = useRouter();
 
-    const onSubmit = (data) => {
-      const formData = {
-        title: data.title,
-        price: parseInt(data.price),
-        description: data.description,
-        categoryId: parseInt(data.category),
-        // images: [data.images[0].name],
-        images: ["https://api.lorem.space/image/watch?w=640&h=480&r=4197", "https://api.lorem.space/image/watch?w=640&h=480&r=9379", "https://api.lorem.space/image/watch?w=640&h=480&r=7934"],
-      };
-      // console.log("formData: ", formData);
-      if (product) {
-        console.log(formData);
-        editProduct(product.id, formData)
-          .then((response) => {
-            console.log("response: ", response);
-          })
-          .catch((error) => {
-            setAlert({
-              active: true,
-              message: error.message,
-              type: "error",
-              autoClose: true,
-            });
-          });
-      } else {
-        addProduct(formData)
-          .then((response) => {
-            console.log("response: ", response);
-            setOpen(false);
-            setAlert({
-              active: true,
-              message: "Product added successfully",
-              type: "success",
-              autoClose: true,
-            });
-          })
-          .catch((error) => {
-            setAlert({
-              active: true,
-              message: error.message,
-              type: "error",
-              autoClose: true,
-            });
-          });
-      }
+  const onSubmit = (data) => {
+    const formData = {
+      title: data.title,
+      price: parseInt(data.price),
+      description: data.description,
+      categoryId: parseInt(data.category),
+      images: [data.images[0]],
+      // images: ["https://api.lorem.space/image/watch?w=640&h=480&r=4197", "https://api.lorem.space/image/watch?w=640&h=480&r=9379", "https://api.lorem.space/image/watch?w=640&h=480&r=7934"],
     };
-    const defaultProduct = {
-      title: product?.title || "",
-      price: product?.price || 0,
-      category: product?.category?.id,
-      description: product?.description || "",
-      images: ["https://placeimg.com/640/480/any"],
-    };
-    const {
-      register,
-      handleSubmit,
-      formState: { errors },
-    } = useForm({
-      defaultValues: defaultProduct,
-      resolver: joiResolver(createProductSchema),
-    });
+    if (product) {
+      console.log(formData);
+      editProduct(product.id, formData)
+        .then(() => {
+          router.push("/dashboard/products");
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: "error",
+            autoClose: true,
+          });
+        });
+    } else {
+      addProduct(formData)
+        .then((response) => {
+          console.log("response: ", response);
+          setOpen(false);
+          setAlert({
+            active: true,
+            message: "Product added successfully",
+            type: "success",
+            autoClose: true,
+          });
+        })
+        .catch((error) => {
+          setAlert({
+            active: true,
+            message: error.message,
+            type: "error",
+            autoClose: true,
+          });
+        });
+    }
+  };
+  const defaultProduct = {
+    title: product?.title || "",
+    price: product?.price || 0,
+    category: product?.category?.id,
+    description: product?.description || "",
+    images: ["https://placeimg.com/640/480/any"],
+  };
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: defaultProduct,
+    resolver: joiResolver(createProductSchema),
+  });
 
-    return (
+  return (
+    <>
+      <Alert />
       <form ref={formRef} onSubmit={handleSubmit(onSubmit)}>
         <div className="overflow-hidden">
           <div className="px-4 py-5 bg-white sm:p-6">
@@ -186,8 +189,6 @@ export default function FormProduct({ product, setOpen, setAlert }) {
           </div>
         </div>
       </form>
-    );
-  } else {
-    return <div>Loading...</div>;
-  }
+    </>
+  );
 }

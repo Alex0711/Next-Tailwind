@@ -7,7 +7,7 @@ const Alert = ({ alert, handleClose }) => {
     }, 9000);
   }
   let color = "";
-  if (alert.type === "success") {
+  if (alert?.type === "success") {
     color = "bg-green-300";
   } else {
     color = "bg-red-500";
