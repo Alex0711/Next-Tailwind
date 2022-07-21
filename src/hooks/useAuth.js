@@ -64,7 +64,14 @@ function useProviderAuth() {
     return fetchUser;
   }, [fetchUser]);
 
-  return { user, signIn };
+  const logout = () => {
+    Cookie.remove("token");
+    setUser(null);
+    delete axios.defaults.headers.Authorization;
+    window.location.href = "/login";
+  };
+
+  return { user, signIn, logout };
 }
 
 export const ProviderAuth = ({ children }) => {

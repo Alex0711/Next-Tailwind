@@ -3,16 +3,12 @@ import { Fragment } from "react";
 import { Disclosure, Menu, Transition } from "@headlessui/react";
 import { BellIcon, MenuIcon, XIcon } from "@heroicons/react/outline";
 import { useAuth } from "@hooks/useAuth";
+import { useRouter } from "next/router";
 
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Productos", href: "/dashboard/products/", current: false },
-  { name: "Ventas", href: "#", current: false },
-];
 const userNavigation = [
   { name: "Your Profile", href: "#" },
   { name: "Settings", href: "#" },
-  { name: "Sign out", href: "#" },
+  // { name: "Sign out", href: "#" },
 ];
 
 function classNames(...classes) {
@@ -20,6 +16,13 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const router = useRouter();
+  console.log(router.pathname);
+  const navigation = [
+    { name: "Dashboard", href: "/dashboard", current: router.pathname === "/dashboard" },
+    { name: "Productos", href: "/dashboard/products/", current: router.pathname === "/dashboard/products" },
+    { name: "Ventas", href: "#", current: false },
+  ];
   const auth = useAuth();
   const userData = {
     name: auth?.user?.name,
@@ -89,6 +92,9 @@ export default function Header() {
                               )}
                             </Menu.Item>
                           ))}
+                          <button className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700" onClick={() => auth.logout()}>
+                            logout
+                          </button>
                         </Menu.Items>
                       </Transition>
                     </Menu>
