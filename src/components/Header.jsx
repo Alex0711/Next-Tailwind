@@ -22,7 +22,7 @@ export default function Header() {
   const navigation = [
     { name: "Dashboard", href: "/dashboard", current: router.pathname === "/dashboard" },
     { name: "Productos", href: "/dashboard/products/", current: router.pathname === "/dashboard/products" },
-    { name: "Ventas", href: "#", current: false },
+    { name: "Ventas", href: "/", current: false },
   ];
   const auth = useAuth();
   const userData = {

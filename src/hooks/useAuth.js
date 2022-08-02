@@ -38,6 +38,7 @@ function useProviderAuth() {
       //y la API en la respuesta me envía un acces_token
       //Axios.post recibe tres parametros 1- La solicitud a la API, 2- Parámetros, en este
       //caso usuario y contraseña 3- Opciones o configuraciones que le podemos añadir
+      console.log({ data });
 
       if (data) {
         //creo la cookie que se va a guardar como token
@@ -55,7 +56,9 @@ function useProviderAuth() {
     } catch (error) {
       if (error.code === "ERR_BAD_REQUEST") {
         setUser(null);
+        throw error;
       }
+      throw error;
     }
     await fetchUser();
   };
