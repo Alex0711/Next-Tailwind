@@ -18,9 +18,11 @@ function useProviderAuth() {
         const { data: user } = await axios.get(endPoints.auth.profile);
 
         setUser(user);
+        console.log(user);
       }
     } catch (error) {
       setUser(null);
+      console.log(error);
       throw error;
     }
   }, []);
