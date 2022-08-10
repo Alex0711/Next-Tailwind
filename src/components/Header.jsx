@@ -30,6 +30,7 @@ export default function Header() {
     email: auth?.user?.email,
     imageUrl: `https://ui-avatars.com/api/?name=${auth?.user?.name}`,
   };
+  console.log(userData);
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
