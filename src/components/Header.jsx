@@ -30,7 +30,6 @@ export default function Header() {
     email: auth?.user?.email,
     imageUrl: `https://ui-avatars.com/api/?name=${auth?.user?.name}`,
   };
-  console.log({ userData });
 
   return (
     <>
@@ -73,7 +72,7 @@ export default function Header() {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img width={28} height={28} fill="auto" className="h-8 w-8 rounded-full" src={userData.imageUrl} alt="" />
+                          <img width={28} height={28} fill="auto" className="h-8 w-8 rounded-full" src={`https://ui-avatars.com/api/?name=${auth?.user?.name}`} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition
