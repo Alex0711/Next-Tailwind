@@ -18,7 +18,7 @@ function useProviderAuth() {
         const { data: user } = await axios.get(endPoints.auth.profile);
 
         setUser(user);
-        console.log("seteando usuario en useAuth: ", user);
+        console.log("seteando usuario en useAuth");
       }
     } catch (error) {
       setUser(null);

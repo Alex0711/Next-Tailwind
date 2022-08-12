@@ -32,17 +32,7 @@ export default function Header() {
     { name: "Ventas", href: "/", current: false },
   ];
 
-  console.log("Header => user", user);
-  console.log("Header => auth", auth);
-
-  const userData = {
-    name: auth?.user?.name,
-    email: auth?.user?.email,
-    imageUrl: `https://ui-avatars.com/api/?name=${auth?.user?.name}`,
-  };
-
   const handleClick = (endPoint) => {
-    //event.preventDefault();
     router.push(`${endPoint}`);
   };
 

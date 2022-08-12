@@ -25,8 +25,9 @@ export default function LoginPage() {
         router.push("/dashboard");
       })
       .catch((error) => {
+        console.log(error);
         if (error.code === "ERR_BAD_REQUEST") {
-          setErrorLogin("Invalid email or password");
+          setErrorLogin("Try with email: admin@mail.com and password: admin123");
         } else {
           console.log(error);
           setErrorLogin(error.message);
