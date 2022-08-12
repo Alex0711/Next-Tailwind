@@ -31,6 +31,11 @@ export default function Header() {
     imageUrl: `https://ui-avatars.com/api/?name=${auth?.user?.name}`,
   };
 
+  const handleClick = (endPoint) => {
+    //event.preventDefault();
+    router.push(`${endPoint}`);
+  };
+
   return (
     <>
       <Disclosure as="nav" className="bg-gray-800">
@@ -39,20 +44,23 @@ export default function Header() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="flex items-center justify-between h-16">
                 <div className="flex items-center">
-                  <div className="flex-shrink-0">
+                  <div className="flex-shrink-0 cursor-pointer" onClick={() => handleClick("/")}>
                     <Image width={36} height={36} className="h-8 w-8" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow" />
                   </div>
                   <div className="hidden md:block">
                     <div className="ml-10 flex items-baseline space-x-4">
                       {navigation.map((item) => (
-                        <a
+                        <p
                           key={item.name}
-                          href={item.href}
-                          className={classNames(item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white", "px-3 py-2 rounded-md text-sm font-medium")}
+                          className={classNames(
+                            item.current ? "bg-gray-900 text-white" : "text-gray-300 hover:bg-gray-700 hover:text-white",
+                            "px-3 py-2 rounded-md text-sm font-medium cursor-pointer"
+                          )}
                           aria-current={item.current ? "page" : undefined}
+                          onClick={() => handleClick(item.href)}
                         >
                           {item.name}
-                        </a>
+                        </p>
                       ))}
                     </div>
                   </div>

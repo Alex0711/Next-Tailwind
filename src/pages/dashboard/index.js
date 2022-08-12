@@ -62,7 +62,7 @@ export default function Dashboard() {
                       <td className="px-6 py-4 whitespace-nowrap">
                         <div className="flex items-center">
                           <div className="flex-shrink-0 h-10 w-10">
-                            <Image className="h-10 w-10 rounded-full" src={product.images[0]} alt="" width={40} height={40} />
+                            <img className="h-10 w-10 rounded-full" src={product?.images[0]} alt="" width={40} height={40} />
                           </div>
                           <div className="ml-4">
                             <div className="text-sm font-medium text-gray-900">{product.title}</div>
