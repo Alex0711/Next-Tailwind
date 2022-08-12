@@ -17,14 +17,24 @@ function classNames(...classes) {
 }
 
 export default function Header() {
+  const auth = useAuth();
+  if (!auth.user) {
+    auth.fetchUser();
+  }
+  const user = auth.user;
+
   const router = useRouter();
   console.log(router.pathname);
+
   const navigation = [
     { name: "Dashboard", href: "/dashboard", current: router.pathname === "/dashboard" },
     { name: "Productos", href: "/dashboard/products/", current: router.pathname === "/dashboard/products" },
     { name: "Ventas", href: "/", current: false },
   ];
-  const auth = useAuth();
+
+  console.log("Header => user", user);
+  console.log("Header => auth", auth);
+
   const userData = {
     name: auth?.user?.name,
     email: auth?.user?.email,
@@ -80,7 +90,7 @@ export default function Header() {
                       <div>
                         <Menu.Button className="max-w-xs bg-gray-800 rounded-full flex items-center text-sm focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
                           <span className="sr-only">Open user menu</span>
-                          <img width={28} height={28} fill="auto" className="h-8 w-8 rounded-full" src={`https://ui-avatars.com/api/?name=${auth?.user?.name}`} alt="" />
+                          <img width={28} height={28} fill="auto" className="h-8 w-8 rounded-full" src={`https://ui-avatars.com/api/?name=${user?.name}`} alt="" />
                         </Menu.Button>
                       </div>
                       <Transition

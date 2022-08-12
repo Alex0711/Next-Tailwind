@@ -18,11 +18,10 @@ function useProviderAuth() {
         const { data: user } = await axios.get(endPoints.auth.profile);
 
         setUser(user);
-        console.log(user);
+        console.log("seteando usuario en useAuth: ", user);
       }
     } catch (error) {
       setUser(null);
-      console.log(error);
       throw error;
     }
   }, []);
@@ -76,7 +75,7 @@ function useProviderAuth() {
     window.location.href = "/login";
   };
 
-  return { user, signIn, logout };
+  return { user, signIn, logout, fetchUser };
 }
 
 export const ProviderAuth = ({ children }) => {
